@@ -1,0 +1,105 @@
+<?php /** @var \Light\Form\Element\MultiSelectKeyValue $element */ ?>
+<?php $element = $this->element; ?>
+
+<style>
+  .mb-3 {
+    margin-bottom: 30px;
+  }
+</style>
+
+<div data-container="<?php echo $element->getName(); ?>">
+  <div class="inputs">
+    <?php foreach ($element->getValue() as $index => $value) : ?>
+      <div class="row mb-3">
+        <div class="col-xs-12 col-sm-5">
+          <div class="element-input key">
+            <div class="bmd-field-group">
+
+              <input data-type-key="1" type="text" class="bmd-input"
+                     id="<?php echo $element->getName(); ?>"
+                     name="<?php echo $element->getName(); ?>[<?php echo $index; ?>][key]"
+                     value="<?php echo $value['key'] ?? null ?: ''; ?>">
+
+              <label class="bmd-label up" data-initialized="true"><?php echo $element->getKeyLabel(); ?></label>
+              <span class="bmd-bar"></span>
+
+              <span class="bmd-field-feedback"></span>
+            </div>
+          </div>
+        </div>
+        <div class="col-xs-12 col-sm-6">
+          <div class="element-input value">
+            <div class="bmd-field-group">
+
+              <input data-type-value="1" type="text" class="bmd-input"
+                     id="<?php echo $element->getName(); ?>"
+                     name="<?php echo $element->getName(); ?>[<?php echo $index; ?>][value]"
+                     value="<?php echo $value['value'] ?? null ?: ''; ?>">
+
+              <label class="bmd-label up" data-initialized="true"><?php echo $element->getValueLabel(); ?></label>
+              <span class="bmd-bar"></span>
+
+              <span class="bmd-field-feedback"></span>
+            </div>
+          </div>
+        </div>
+        <a data-delete-row="1" class="btn btn-danger bmd-fab bmd-fab-sm bmd-ripple bmd-floating">
+          <i class="bmd-icon flaticon-close47"></i>
+        </a>
+      </div>
+    <?php endforeach; ?>
+  </div>
+
+  <a data-add-multi="true" class="btn btn-primary btn-block bmd-ripple bmd-floating">Добавить</a>
+</div>
+<script>
+
+  $('[data-container="<?php echo $element->getName(); ?>"]').on('click', '[data-add-multi]', function () {
+    let template = '<div class="row mb-3">';
+    template += '<div class="col-xs-12 col-sm-5">';
+    template += '<div class="element-input key">';
+    template += '<div class="bmd-field-group">';
+    template += '<input data-type-key="1" type="text" class="bmd-input" id="<?php echo $element->getName(); ?>" name="" value="">';
+    template += '<label class="bmd-label up" data-initialized="true"><?php echo $element->getKeyLabel(); ?></label>';
+    template += '<span class="bmd-bar"></span>';
+    template += '<span class="bmd-field-feedback"></span>';
+    template += '</div>';
+    template += '</div>';
+    template += '</div>';
+    template += '<div class="col-xs-12 col-sm-6">';
+    template += ' <div class="element-input value">';
+    template += '    <div class="bmd-field-group">';
+    template += '        <input data-type-value="1" type="text" class="bmd-input" id="<?php echo $element->getName(); ?>" name="" value="">';
+    template += '            <label class="bmd-label up" data-initialized="true"><?php echo $element->getValueLabel(); ?></label>';
+    template += '            <span class="bmd-bar"></span>';
+    template += '            <span class="bmd-field-feedback"></span>';
+    template += '   </div>';
+    template += '</div>';
+    template += '</div>';
+    template += '<div class="col-sm-1 text-right"><a data-delete-row="1" class="btn btn-danger bmd-fab bmd-fab-sm bmd-ripple bmd-floating"> <i class="bmd-icon flaticon-close47"></i> </a></div>';
+    template += '</div>';
+
+    $(this).closest('[data-container="<?php echo $element->getName(); ?>"]').find('.inputs').append(template);
+
+    let rows = $('[data-container="<?php echo $element->getName(); ?>"] .row');
+    rows.each(function (index, row) {
+      let name = "<?php echo $element->getName(); ?>";
+      let nameWithIndex = name + "[" + index + "]";
+      $(this).find('.element-input.key input').attr('name', nameWithIndex + "[key]");
+      $(this).find('.element-input.value input').attr('name', nameWithIndex + "[value]");
+    });
+  });
+
+  $('[data-container="<?php echo $element->getName(); ?>"]').on('click', '[data-delete-row]', function () {
+    $(this).closest('.row').remove();
+
+    let rows = $('[data-container="<?php echo $element->getName(); ?>"] .row');
+    rows.each(function (index, row) {
+      let name = "<?php echo $element->getName(); ?>";
+      let nameWithIndex = name + "[" + index + "]";
+      $(this).find('.element-input.key input').attr('name', nameWithIndex + "[key]");
+      $(this).find('.element-input.value input').attr('name', nameWithIndex + "[value]");
+    });
+  });
+
+</script>

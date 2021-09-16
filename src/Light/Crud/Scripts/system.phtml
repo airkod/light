@@ -1,0 +1,155 @@
+<div class="header bmd-border-primary box-shadow">
+  <div class="container">
+    <div class="row">
+      <div class="col-xs-6">
+        <p class="lead">System monitor</p>
+      </div>
+      <div class="col-xs-6 text-right">
+        <a class="btn btn-primary bmd-ripple bmd-fab bmd-floating bmd-fab-sm"
+           data-bmd-state="primary"
+           data-toggle="tooltip"
+           data-placement="bottom"
+           data-original-title="Refresh"
+           onclick="NAV.reload()">
+          <span class="bmd-icon flaticon-refresh55"></span>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container">
+  <div class="row">
+    <div class="col-md-6 col-xs-12">
+      <div class="panel">
+        <div class="panel-body">
+          <h4 class="text-mutted lead">Disk</h4>
+          <hr>
+          <?php if ($this->disk) : ?>
+            <div class="row block-info">
+              <div class="col-md-4 col-xs-6">
+                <table class="custom-table xs">
+                  <tr>
+                    <td><label>Total</label></td>
+                    <td><?php echo $this->disk['total']; ?> Gb</td>
+                  </tr>
+                  <tr>
+                    <td><label>Free</label></td>
+                    <td><?php echo $this->disk['free']; ?> Gb</td>
+                  </tr>
+                  <tr>
+                    <td><label>Used</label></td>
+                    <td><?php echo $this->disk['total'] - $this->disk['free']; ?> Gb</td>
+                  </tr>
+                </table>
+              </div>
+              <div class="col-md-8 col-xs-6">
+                <div class="chart disk">
+                  <div class="used" style="height: <?php echo 100 - (100 * $this->disk['free']) / $this->disk['total']; ?>%;"></div>
+                </div>
+              </div>
+            </div>
+          <?php else: ?>
+            <p class="lead text-center">Nothing to show</p>
+          <?php endif; ?>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6 col-xs-12">
+      <div class="panel">
+        <div class="panel-body">
+          <h4 class="text-mutted lead">Memory</h4>
+          <hr>
+          <?php if ($this->memory) : ?>
+            <div class="row block-info">
+              <div class="col-md-4 col-xs-6">
+                <table class="custom-table xs">
+                  <tr>
+                    <td><label>Total</label></td>
+                    <td><?php echo $this->memory['MemTotal']; ?> Gb</td>
+                  </tr>
+                  <tr>
+                    <td><label>Available</label></td>
+                    <td><?php echo $this->memory['MemAvailable']; ?> Gb</td>
+                  </tr>
+                  <tr>
+                    <td><label>Used</label></td>
+                    <td><?php echo $this->memory['MemTotal'] - $this->memory['MemAvailable']; ?> Gb</td>
+                  </tr>
+                </table>
+              </div>
+              <div class="col-md-8 col-xs-6">
+                <div class="chart disk">
+                  <div class="used" style="height: <?php echo 100 - (100 * $this->memory['MemAvailable']) / $this->memory['MemTotal']; ?>%;"></div>
+                </div>
+              </div>
+            </div>
+          <?php else: ?>
+            <p class="lead text-center">Nothing to show</p>
+          <?php endif; ?>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6 col-xs-12">
+      <div class="panel">
+        <div class="panel-body">
+          <h4 class="text-mutted lead">CPU</h4>
+          <hr>
+          <?php if ($this->cpuLoadAverage) : ?>
+            <div class="row block-info">
+              <div class="col-md-9 col-xs-6">
+                <table class="custom-table">
+                  <tr>
+                    <td><label>CPU usage</label></td>
+                    <td><?php echo number_format($this->cpuLoadAverage, 2); ?>%</td>
+                  </tr>
+                  <tr>
+                    <td><label>CPU cores</label></td>
+                    <td><?php echo $this->cpuCoreCount; ?></td>
+                  </tr>
+                  <tr>
+                    <td><label>CPU model</label></td>
+                    <td><?php echo $this->cpuName; ?></td>
+                  </tr>
+                </table>
+              </div>
+              <div class="col-md-3 col-xs-12">
+                <div class="chart disk">
+                  <div class="used" style="height: <?php echo number_format($this->cpuLoadAverage, 2); ?>%;"></div>
+                </div>
+              </div>
+            </div>
+          <?php else: ?>
+            <p class="lead text-center">Nothing to show</p>
+          <?php endif; ?>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6 col-xs-12">
+      <div class="panel">
+        <div class="panel-body">
+          <h4 class="text-mutted lead">System</h4>
+          <hr>
+          <?php if ($this->uptime) : ?>
+            <div class="row">
+              <div class="col-xs-12">
+
+                <table class="custom-table">
+                  <tr>
+                    <td><label>Uptime</label></td>
+                    <td><?php echo $this->uptime; ?></td>
+                  </tr>
+                  <tr>
+                    <td><label>Version</label></td>
+                    <td><?php echo $this->version; ?></td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+          <?php else: ?>
+            <p class="lead text-center">Nothing to show</p>
+          <?php endif; ?>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

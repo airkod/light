@@ -1,0 +1,42 @@
+<?php if ($this->filter) : ?>
+
+  <?php
+    $visibleFilterCount = 0;
+    foreach ($this->filter as $filter) {
+      if ($filter['type'] != 'hidden') {
+        $visibleFilterCount++;
+      }
+    };
+
+    if ($visibleFilterCount > 5) {
+      $visibleFilterCount = 3;
+    }
+  ?>
+
+  <div class="row">
+    <?php foreach ($this->filter as $filter) : ?>
+      <div class="col-xs-12 col-sm-<?php echo 12 / $visibleFilterCount; ?>">
+
+        <?php if ($filter['type'] == 'hidden') : ?>
+          <?php echo $this->partial('table/partial/filter/hidden', ['filter' => $filter]); ?>
+
+        <?php elseif ($filter['type'] == 'search') : ?>
+          <?php echo $this->partial('table/partial/filter/search', ['filter' => $filter]); ?>
+
+        <?php elseif ($filter['type'] == 'select') : ?>
+          <?php echo $this->partial('table/partial/filter/select', ['filter' => $filter]); ?>
+
+        <?php elseif ($filter['type'] == 'bool') : ?>
+          <?php echo $this->partial('table/partial/filter/bool', ['filter' => $filter]); ?>
+
+        <?php elseif ($filter['type'] == 'dateTime') : ?>
+          <?php echo $this->partial('table/partial/filter/datetime', ['filter' => $filter]); ?>
+
+        <?php elseif ($filter['type'] == 'model') : ?>
+          <?php echo $this->partial('table/partial/filter/model', ['filter' => $filter]); ?>
+
+        <?php endif; ?>
+      </div>
+    <?php endforeach; ?>
+  </div>
+<?php endif; ?>

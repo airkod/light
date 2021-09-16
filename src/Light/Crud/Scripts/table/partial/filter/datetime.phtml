@@ -1,0 +1,42 @@
+<?php $filter = $this->filter; ?>
+
+<?php echo $this->asset([
+  'admin/libraries/datetimepicker/jquery.datetimepicker.min.css',
+  'admin/libraries/datetimepicker/jquery.datetimepicker.full.min.js',
+]); ?>
+
+<div style="display: flex;">
+  <div class="form-group">
+    <div class="input-group">
+      <span class="input-group-addon bmd-addon">
+        <i class="fa fa-calendar"></i>
+      </span>
+      <div class="bmd-field-group">
+        <input data-datepicker="true"
+               name="filter[<?php echo $filter['by']; ?>][from]"
+               value="<?php echo $filter['value']['from'] ?? '2020/01/01'; ?>"
+               type="text"
+               style="cursor: pointer"
+               class="bmd-input"/>
+        <span class="bmd-bar"></span>
+      </div>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="input-group">
+      <span class="input-group-addon bmd-addon">
+        <i class="fa fa-date"></i>
+      </span>
+      <div class="bmd-field-group">
+        <input data-datepicker="true"
+               onchange="$(this.form).submit();"
+               name="filter[<?php echo $filter['by']; ?>][to]"
+               value="<?php echo $filter['value']['to'] ?? date('Y/m/d', time() + 86400); ?>"
+               type="text"
+               style="cursor: pointer"
+               class="bmd-input"/>
+        <span class="bmd-bar"></span>
+      </div>
+    </div>
+  </div>
+</div>

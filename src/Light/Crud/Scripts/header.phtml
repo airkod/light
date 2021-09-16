@@ -1,0 +1,109 @@
+<div class="header bmd-border-primary box-shadow">
+  <div class="container">
+    <div class="row">
+      <div class="col-xs-6">
+        <?php if ($this->title) : ?>
+          <p class="lead text-primary">
+            <?php if ($this->icon) : ?>
+              <i style="margin-right: 10px" class="fa fa-<?php echo $this->icon; ?>"></i>
+            <?php endif; ?>
+            <?php echo $this->title; ?>
+          </p>
+        <?php endif; ?>
+      </div>
+
+      <div class="col-xs-6 text-right">
+
+        <?php if (count($this->filter ?? [])) : ?>
+          <a href="?"
+             class="btn btn-danger bmd-ripple bmd-fab bmd-floating bmd-fab-sm reset-filters"
+             data-bmd-state="danger"
+             data-toggle="tooltip"
+             data-placement="bottom"
+             data-original-title="Сбросить фильтры">
+            <span class="fa fa-filter"></span>
+          </a>
+        <?php endif; ?>
+
+        <?php if ($this->done) : ?>
+          <a href="<?php echo $this->uri(['action' => 'index']); ?>"
+             class="btn btn-primary bmd-ripple bmd-fab bmd-floating bmd-fab-sm"
+             data-bmd-state="primary"
+             data-toggle="tooltip"
+             data-placement="bottom"
+             data-original-title="Готово">
+            <span class="fa fa-check"></span>
+          </a>
+        <?php endif; ?>
+
+        <?php if ($this->button) : ?>
+          <a href="<?php echo $this->uri(['action' => 'manage']); ?>"
+             class="btn btn-primary bmd-ripple bmd-fab bmd-floating bmd-fab-sm"
+             data-bmd-state="primary"
+             data-toggle="tooltip"
+             data-placement="bottom"
+             data-original-title="Добавить">
+            <span class="bmd-icon flaticon-add182"></span>
+          </a>
+        <?php endif; ?>
+
+        <?php if ($this->positioning) : ?>
+          <?php if ($this->positioningCustom) : ?>
+            <a href="<?php echo $this->uri(['action' => 'position', 'language' => $this->language]); ?>"
+               class="btn btn-info bmd-ripple bmd-fab bmd-floating bmd-fab-sm"
+               data-bmd-state="info"
+               data-toggle="tooltip"
+               data-placement="bottom"
+               data-original-title="Позиция">
+
+              <span class="bmd-icon flaticon-sort52"></span>
+            </a>
+
+          <?php else: ?>
+            <a
+              data-href="<?php echo \Light\Front::getInstance()->getRouter()->assemble(['action' => 'position'], \Light\Front::getInstance()->getRequest()->getParams(), false); ?>"
+              data-table-position="true"
+              class="btn btn-info bmd-ripple bmd-fab bmd-floating bmd-fab-sm"
+              data-bmd-state="info"
+              data-toggle="tooltip"
+              data-placement="bottom"
+              data-original-title="Позиция">
+
+              <span class="bmd-icon flaticon-sort52"></span>
+            </a>
+
+          <?php endif; ?>
+        <?php endif; ?>
+
+        <?php if (count($this->export ?? [])) : ?>
+          <a data-force="true"
+             href="<?php echo $this->uri(['action' => 'export']) . '?' . \Light\Front::getInstance()->getRouter()->getRequest()->getUriParams(); ?>"
+             class="btn btn-default bmd-ripple bmd-fab bmd-floating bmd-fab-sm"
+             data-bmd-state="default"
+             data-toggle="tooltip"
+             data-placement="bottom"
+             data-original-title="Экспорт">
+            <span class="fa fa-download"></span>
+          </a>
+        <?php endif; ?>
+
+        <?php foreach ($this->headerButtons ?? [] as $headerButton) : ?>
+
+          <?php if ($headerButton['confirm'] ?? false) : ?>
+            <a onclick="modal.confirm('<?php echo $headerButton['confirm']; ?>', () => NAV.nav('<?php echo $this->uri($headerButton['url'], $headerButton['params'] ?? []); ?>'))"
+          <?php else: ?>
+            <a href="<?php echo $this->uri($headerButton['url'], $headerButton['params'] ?? []); ?>"
+          <?php endif; ?>
+             class="btn btn-<?php echo $headerButton['style']['color'] ?? 'primary'; ?> bmd-ripple bmd-fab bmd-floating bmd-fab-sm"
+             data-bmd-state="<?php echo $headerButton['style']['color'] ?? 'primary'; ?>"
+             data-toggle="tooltip"
+             data-placement="bottom"
+             data-original-title="<?php echo $headerButton['title']; ?>">
+            <span class="bmd-icon flaticon-<?php echo $headerButton['style']['icon']; ?>"></span>
+          </a>
+        <?php endforeach; ?>
+
+      </div>
+    </div>
+  </div>
+</div>

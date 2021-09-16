@@ -1,0 +1,72 @@
+<?php /** @var \Light\Paginator $paginator */ ?>
+<?php $paginator = $this->paginator; ?>
+
+<div class="panel-footer">
+  <div class="row">
+    <div class="col-xs-12 col-md-6 text-muted">
+
+      <?php if ($paginator->count() <= $paginator->getItemsPerPage()) : ?>
+        <b><?php echo $paginator->count(); ?></b> элем.
+      <?php else: ?>
+        <b><?php echo (($paginator->getPage() - 1) * $paginator->getItemsPerPage()) + 1; ?></b> -
+        <b><?php
+          $till = $paginator->getPage() * $paginator->getItemsPerPage();
+          if ($till > $paginator->count()) {
+            echo $paginator->count();
+          } else {
+            echo $till;
+          }
+          ?></b>
+        из
+        <b><?php echo $paginator->count(); ?></b> элем.
+      <?php endif; ?>
+      
+    </div>
+
+    <?php if ($paginator->count() > $paginator->getItemsPerPage()) : ?>
+
+      <div class="col-xs-12 col-md-6">
+        <nav aria-label="Page navigation" class="text-right">
+          <ul class="pagination" data-paginator="true">
+
+            <?php if ($this->prev) : ?>
+              <li>
+                <a data-force="true" data-page="<?php echo 1; ?>" aria-label="Previous">
+                  <span aria-hidden="true">&laquo;</span>
+                </a>
+              </li>
+              <li>
+                <a data-force="true" data-page="<?php echo $this->prev; ?>" aria-label="Previous">
+                  <span aria-hidden="true">&lsaquo;</span>
+                </a>
+              </li>
+            <?php endif; ?>
+
+            <?php foreach ($this->pages as $page) : ?>
+              <li <?php if ($page == $this->paginator->getPage()) : ?>class="active"<?php endif; ?>>
+                <a data-force="true" data-page="<?php echo $page; ?>">
+                  <?php echo $page; ?>
+                </a>
+              </li>
+            <?php endforeach; ?>
+
+            <?php if ($this->next) : ?>
+              <li>
+                <a data-force="true" data-page="<?php echo $this->next; ?>" aria-label="Next">
+                  <span aria-hidden="true">&rsaquo;</span>
+                </a>
+              </li>
+              <li>
+                <a data-force="true" data-page="<?php echo round($paginator->count() / $paginator->getItemsPerPage()); ?>" aria-label="Next">
+                  <span aria-hidden="true">&raquo;</span>
+                </a>
+              </li>
+            <?php endif; ?>
+
+          </ul>
+        </nav>
+      </div>
+    <?php endif; ?>
+
+  </div>
+</div>

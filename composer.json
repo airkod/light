@@ -1,0 +1,19 @@
+{
+  "name": "airkod/light",
+  "authors": [
+    {
+      "name": "Edward Komissarov",
+      "email": "execrot@gmail.com"
+    }
+  ],
+  "require": {
+    "php": ">=7.1",
+    "ext-json": "*",
+    "ext-mbstring": "*"
+  },
+  "autoload": {
+    "psr-0": {
+      "Light": "src/"
+    }
+  }
+}

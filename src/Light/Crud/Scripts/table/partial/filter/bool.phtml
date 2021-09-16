@@ -1,0 +1,46 @@
+<?php
+
+$filter = $this->filter;
+
+$emptyRow = $selectedRow = [
+  'id' => null,
+  'title' => 'Выберете запись'
+];
+
+if ($filter['value']) {
+  $selectedRow = [
+    'id' => $filter['value'],
+    'title' => $filter[$filter['value']]
+  ];
+}
+
+$filter['options'] = [
+  ['id' => 'true', 'title' => $filter['true']],
+  ['id' => 'false', 'title' => $filter['false']],
+];
+
+?>
+
+<div class="form-group">
+  <div class="dropdown bmd-select form-control" data-control-select="true">
+    <a class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" role="button" aria-expanded="false">
+      <span class="bmd-selected-value"><?php echo $selectedRow['title']; ?></span>
+      <span class="caret"></span>
+      <input name="filter[<?php echo $filter['by']; ?>]" value="<?php echo $selectedRow['id']; ?>" type="hidden"/>
+    </a>
+    <ul class="dropdown-menu">
+      <li><a data-option="<?php echo $emptyRow['id']; ?>" data-value="<?php echo $emptyRow['title']; ?>"><?php echo $emptyRow['title']; ?></a></li>
+      <li class="divider"></li>
+      <?php foreach ($filter['options'] as $row) : ?>
+        <li>
+          <a <?php if ($filter['value'] == $row['id']) : ?> class="bmd-bg-primary bmd-text-grey-50" <?php endif; ?>
+            data-option="<?php echo $row['id']; ?>"
+            data-value="<?php echo $row['title']; ?>">
+            <?php echo $row['title']; ?>
+          </a>
+        </li>
+      <?php endforeach; ?>
+    </ul>
+    <span class="bmd-bar"></span>
+  </div>
+</div>

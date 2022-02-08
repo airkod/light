@@ -192,7 +192,7 @@ abstract class Crud extends AuthCrud
    * @return array
    * @throws Exception
    */
-  protected function setPosition()
+  public function setPosition()
   {
     $this->getView()->setLayoutEnabled(false);
 

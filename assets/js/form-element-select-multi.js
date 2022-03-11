@@ -9,7 +9,7 @@ $(document).ready(function () {
     const selectFields = JSON.parse(atob(root.data('select-fields')));
     selectFields['id'] = 'id';
 
-    const iframeUrl = '/' + sourceNamespace[sourceNamespace.length - 1].toLowerCase() + '/select?fields=' + root.data('select-fields');
+    const iframeUrl = '/' + sourceNamespace[sourceNamespace.length - 1] + '/select?fields=' + root.data('select-fields');
 
     const handler = (event) => {
       const item = JSON.parse(atob(event.data.data));

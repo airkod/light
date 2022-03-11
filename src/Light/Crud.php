@@ -222,7 +222,7 @@ abstract class Crud extends AuthCrud
   /**
    * @throws Exception
    */
-  protected function copy()
+  public function copy()
   {
     $this->getView()->setLayoutEnabled(false);
 
@@ -245,7 +245,7 @@ abstract class Crud extends AuthCrud
         continue;
       }
 
-      if (class_exists($property->getType())) {
+      if (class_exists($property->getType(), false)) {
 
         if ($field = $record->{$property->getName()}) {
           $data[$property->getName()] = $field->id;

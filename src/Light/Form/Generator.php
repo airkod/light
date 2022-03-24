@@ -110,8 +110,8 @@ class Generator extends Form
   {
     return !$this->modelHasProperty('enabled') ? null :
       new Checkbox('enabled', [
-        'value' => $this->data->enabled,
-        'label' => 'Активность'
+        'value' => (!strlen($this->data->id)) ? true : $this->data->enabled,
+        'label' => 'Активность',
       ]);
   }
 

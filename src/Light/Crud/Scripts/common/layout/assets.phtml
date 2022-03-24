@@ -59,6 +59,8 @@
     }
   });
 
-  window.storage = <?php echo json_encode(\Light\Front::getInstance()->getConfig()['light']['storage'], JSON_PRETTY_PRINT); ?>;
+  <?php if (\Light\Front::getInstance()->getConfig()['light']['storage'] ?? false) : ?>
+    window.storage = <?php echo json_encode(\Light\Front::getInstance()->getConfig()['light']['storage'], JSON_PRETTY_PRINT); ?>;
+  <?php endif; ?>
 
 </script>

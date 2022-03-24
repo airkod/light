@@ -124,16 +124,19 @@ abstract class DocumentAbstract implements ArrayAccess
         switch ($modelClassObject->getMeta()->getPrimary()) {
 
           case 'id':
-            $objects = $modelClassName::fetchAll(['_id' => ['$in' => array_map(function ($id) {
-
-              /** @var Model $id */
-              return new ObjectId(
+            $objects = [];
+            foreach ($value as $id) {
+              $obj = $modelClassName::fetchOne(['_id' => new ObjectId(
                 is_object($id) ?
+                  /** @var Model $id */
                   $id->{$id->getMeta()->getPrimary()} :
                   $id
-              );
+              )]);
 
-            }, $value)]]);
+              if ($obj) {
+                $objects[] = $obj;
+              }
+            }
             break;
 
           default:
@@ -143,6 +146,19 @@ abstract class DocumentAbstract implements ArrayAccess
         }
 
         if ($toArray) {
+
+          if (is_array($objects)) {
+            $_objects = [];
+            foreach ($objects as $object) {
+              if (is_object($object) && is_callable([$object, 'toArray'])) {
+                $_objects[] = $object->toArray();
+              } else {
+                $_objects[] = $object;
+              }
+            }
+            return $_objects;
+          }
+
           return $objects->toArray();
         }
 

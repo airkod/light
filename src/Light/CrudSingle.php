@@ -46,8 +46,15 @@ abstract class CrudSingle extends Crud
           $formData
         );
 
-        $model->populate($formData);
+        $model->populateWithoutQuerying($formData);
+        $isCreating = !!$model->id;
         $model->save();
+
+        if ($isCreating) {
+          $this->didChanged($model, $formData);
+        } else {
+          $this->didCreated($model, $formData);
+        }
 
         $this->didSaved($model, $formData);
       }

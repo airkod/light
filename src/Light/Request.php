@@ -126,20 +126,11 @@ class Request
     $this->_port = (int)$_SERVER['SERVER_PORT'];
     $this->_ip = $_SERVER['REMOTE_ADDR'];
     
-    $isHttps =
-      $_SERVER['HTTPS']
+    $this->_scheme =
+      $_SERVER['HTTP_X_FORWARDED_PROTO']
+      ?? $_SERVER['HTTP_X_SCHEME']
       ?? $_SERVER['REQUEST_SCHEME']
-      ?? $_SERVER['HTTP_X_FORWARDED_PROTO']
-      ?? null
-    ;
-
-    $isHttps =
-      $isHttps && (
-        strcasecmp('on', $isHttps) == 0
-        || strcasecmp('https', $isHttps) == 0
-      );
-
-    $this->_scheme = $isHttps ? 'https' : 'http';
+      ?? 'http';
 
     $this->_uriRequest = explode('?', $_SERVER['REQUEST_URI'])[0];
     $this->_uriParams = explode('?', $_SERVER['REQUEST_URI'])[1] ?? '';

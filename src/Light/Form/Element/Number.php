@@ -14,4 +14,12 @@ class Number extends ElementAbstract
    * @var string
    */
   public $elementTemplate = 'element/number';
+
+  /**
+   * @return int
+   */
+  public function getValue(): int
+  {
+    return (int)parent::getValue();
+  }
 }

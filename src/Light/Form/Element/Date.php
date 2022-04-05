@@ -64,14 +64,10 @@ class Date extends ElementAbstract
   {
     $value = parent::getValue();
 
-    if (empty($value)) {
-      $value = time();
-    }
-
-    if (is_string($value)) {
+    if (is_string($value) && strlen($value)) {
       return strtotime($value);
     }
 
-    return $value;
+    return $value ?? 0;
   }
 }

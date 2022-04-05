@@ -305,8 +305,8 @@ class Driver extends Model\Driver\DriverAbstract
     }
 
     $command = new Command([
-      "count" => $this->getModel()->getMeta()->getCollection(),
-      "query" => $cond
+      'count' => $this->getModel()->getMeta()->getCollection(),
+      'query' => $cond
     ]);
 
     try {

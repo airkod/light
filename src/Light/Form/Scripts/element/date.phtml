@@ -9,7 +9,10 @@
        <?php if ($element->isReadOnly()) : ?>disabled="disabled"<?php endif; ?>
        id="<?php echo $element->getName(); ?>"
        name="<?php echo $element->getName(); ?>"
-       value="<?php echo date($element->getPhpFormat(), $element->getValue()); ?>"/>
+       <?php if ($element->getValue()) : ?>
+         value="<?php echo date($element->getPhpFormat(), $element->getValue()); ?>"
+       <?php endif; ?>
+       />
 
 <label class="bmd-label"><?php echo $element->getLabel(); ?></label>
 <span class="bmd-bar"></span>

@@ -245,9 +245,30 @@ abstract class Crud extends AuthCrud
         continue;
       }
 
-      if (class_exists($property->getType(), false)) {
+      try {
+        $classExists = class_exists($property->getType());
 
-        if ($field = $record->{$property->getName()}) {
+        if (!$classExists && substr($property->getType(), -2) == '[]') {
+          $classExists = true;
+        }
+
+      } catch (\Throwable $e) {
+        $classExists = false;
+      }
+
+      if ($classExists) {
+
+        if (substr($property->getType(), -2) == '[]') {
+
+          /** @var Model $item */
+          $data[$property->getName()] = [];
+
+          foreach ($record->{$property->getName()} ?? [] as $item) {
+            $data[$property->getName()][] = $item->id;
+          }
+        }
+
+        else if ($field = $record->{$property->getName()}) {
           $data[$property->getName()] = $field->id;
         }
       } else {
@@ -257,7 +278,7 @@ abstract class Crud extends AuthCrud
 
     /** @var Model $newRecord */
     $newRecord = new $modelClassName();
-    $newRecord->populate($data);
+    $newRecord->populateWithoutQuerying($data);
     $newRecord->save();
   }
 
@@ -501,6 +522,7 @@ abstract class Crud extends AuthCrud
     /** @var Model $modelClassName */
     $modelClassName = $this->getModelClassName();
 
+    /** @var Model $model */
     $model = $modelClassName::fetchObject([
       'id' => $this->getRequest()->getParam('id')
     ]);
@@ -527,7 +549,7 @@ abstract class Crud extends AuthCrud
 //          $formData
 //        );
 
-        $model->populate($formData);
+        $model->populateWithoutQuerying($formData);
         $isCreating = !!$model->id;
         $model->save();
 

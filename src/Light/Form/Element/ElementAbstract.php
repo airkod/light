@@ -326,16 +326,18 @@ abstract class ElementAbstract
         try {
           /** @var FilterAbstract $filter */
           $filter = new $filterClassName($settings['options'] ?? []);
-        } catch (Exception $exception) {
+
+          $this->value = $filter->filter($this->value);
+
+        } catch (\Throwable $exception) {
 
           try {
-            $filter = $filterClassName($value);
+            $this->value = $filterClassName($this->value);
+
           } catch (Exception $exception) {
             throw new FilterClassWasNotFound($filterClassName);
           }
         }
-
-        $this->value = $filter->filter($this->value);
       }
 
       return true;

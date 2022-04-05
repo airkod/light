@@ -2,35 +2,38 @@
  * trumbowyg.storage.js
  */
 
-(function ($) {
+if (window.storage) {
+  (function ($) {
 
     'use strict';
 
     $.extend(true, $.trumbowyg, {
-        plugins: {
-            storage: {
-                init: function (trumbowyg) {
+      plugins: {
+        storage: {
+          init: function (trumbowyg) {
 
-                    trumbowyg.addBtnDef('storage', {
+            trumbowyg.addBtnDef('storage', {
 
-                        fn: function () {
+              fn: function () {
 
-                            trumbowyg.saveRange();
+                trumbowyg.saveRange();
 
-                            $.get('/' + window.storage.route + '/modal', {modal: true}, (storage) => {
+                $.get('/' + window.storage.route + '/modal', {modal: true}, (storage) => {
 
-                                modal.container(storage, null, {wide: true}, 'Управление файлами');
+                  modal.container(storage, null, {wide: true}, 'Управление файлами');
 
-                                window.selectImage = (image) => {
-                                    trumbowyg.execCmd('insertHtml', '<img src="' + image + '" />');
-                                    modal.hide();
-                                };
-                            });
-                        }
-                    });
-                }
-            }
+                  window.selectImage = (image) => {
+                    trumbowyg.execCmd('insertHtml', '<img src="' + image + '" />');
+                    modal.hide();
+                  };
+                });
+              }
+            });
+          }
         }
+      }
     });
 
-})(jQuery);
+  })(jQuery);
+
+}

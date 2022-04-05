@@ -123,9 +123,14 @@ class Request
     $this->_method = strtolower($_SERVER['REQUEST_METHOD']);
     $this->_uri = urldecode($_SERVER['REQUEST_URI']);
     $this->_domain = $_SERVER['HTTP_HOST'];
-    $this->_scheme = $_SERVER['REQUEST_SCHEME'];
     $this->_port = (int)$_SERVER['SERVER_PORT'];
     $this->_ip = $_SERVER['REMOTE_ADDR'];
+    
+    $this->_scheme =
+      $_SERVER['HTTP_X_FORWARDED_PROTO']
+      ?? $_SERVER['HTTP_X_SCHEME']
+      ?? $_SERVER['REQUEST_SCHEME']
+      ?? 'http';
 
     $this->_uriRequest = explode('?', $_SERVER['REQUEST_URI'])[0];
     $this->_uriParams = explode('?', $_SERVER['REQUEST_URI'])[1] ?? '';
